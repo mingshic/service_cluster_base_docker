@@ -1,0 +1,21 @@
+version: '3'
+services:
+  top:
+    image: keepalived_nginx
+    hostname: web_top
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /home/containerd/nginx/ntop/htpasswd:/usr/local/nginx/htpasswd 
+      - /home/containerd/nginx/ntop/logs:/usr/local/nginx/logs 
+      - /home/containerd/nginx/ntop/conf/nginx.conf:/usr/local/nginx/conf/nginx.conf:rw
+      - /home/containerd/nginx/ntop/conf/servers:/usr/local/nginx/conf/servers
+      - /home/containerd/nginx/ntop/fileSystemDir:/opt/fileSystemDir
+    ports:
+      - "8088:80"
+      - "8089:8181"
+    deploy:
+      placement:
+        constraints: [node.hostname == wbm64]
+      resources:
+        limits:
+          memory: 500M

@@ -1,0 +1,3 @@
+10.129.210.238 - - [15/Nov/2018:09:30:34 +0800] "GET /activiti-admin/ HTTP/1.1" 200 9301
+10.129.210.238 - - [15/Nov/2018:09:30:34 +0800] "GET /activiti-admin/i18n/en.json HTTP/1.1" 200 37071
+10.129.210.238 - - [15/Nov/2018:09:30:34 +0800] "GET /activiti-admin/app/rest/authenticate HTTP/1.1" 401 68

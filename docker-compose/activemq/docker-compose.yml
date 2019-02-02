@@ -1,0 +1,64 @@
+version: '3'
+services:
+    mq1:
+        image: 10.126.2.65:5000/activemq_py 
+        hostname: one
+        volumes: 
+            - "/etc/localtime:/etc/localtime:ro" 
+            - "/home/containerd/activemq/mq1/conf:/opt/apache-activemq-5.15.6/conf"
+        ports:
+            - "8161:8161"
+            - "6163:61613"
+            - "61616:61616"
+        environment:
+            MQ_ROLE: "consumer"
+            MQ_CLUSTER: "mq2,mq3"
+        command: /preparation/start.py
+        deploy:
+            placement:
+                constraints: [node.hostname == wbm65]
+            resources:
+                limits:
+                    memory: 500M
+    mq2:
+        image: 10.126.2.65:5000/activemq_py 
+        hostname: two
+        volumes:
+            - "/etc/localtime:/etc/localtime:ro"
+            - "/home/containerd/activemq/mq2/conf:/opt/apache-activemq-5.15.6/conf"
+            - "/home/containerd/activemq/data:/opt/apache-activemq-5.15.6/data"
+        ports:
+            - "8162:8161"
+            - "6164:61613"
+            - "61617:61616"
+        environment:
+            MQ_ROLE: "producer_and_consumer"
+            MQ_CLUSTER: "mq1"
+        command: /preparation/start.py
+        deploy:
+            placement:
+                constraints: [node.hostname == wbm65]
+            resources:
+                limits:
+                    memory: 500M
+    mq3:
+        image: 10.126.2.65:5000/activemq_py 
+        hostname: three
+        volumes:
+            - "/etc/localtime:/etc/localtime:ro"
+            - "/home/containerd/activemq/mq3/conf:/opt/apache-activemq-5.15.6/conf"
+            - "/home/containerd/activemq/data:/opt/apache-activemq-5.15.6/data"
+        ports:
+            - "8163:8161"
+            - "6165:61613"
+            - "61618:61616"
+        environment:
+            MQ_ROLE: "producer_and_consumer"
+            MQ_CLUSTER: "mq1"
+        command: /preparation/start.py 
+        deploy:
+            placement:
+                constraints: [node.hostname == wbm65]
+            resources:
+                limits:
+                    memory: 500M

@@ -1,0 +1,17 @@
+version: '2'
+services:
+  vsftp:
+    image: centos_ssh_vsftpd 
+    container_name: vsftp
+    restart: always
+    volumes:
+      - /opt/vsftpd/conf:/etc/vsftpd 
+      - /opt/vsftpd/log/vsftpd.log:/var/log/vsftpd.log:rw
+      - /opt/vsftpd/data:/opt/vsftpd/data
+#    ports:
+#      - "21:21"
+#      - "20:20"
+    network_mode: "host"
+    command:
+      - /usr/sbin/init
+

@@ -1,0 +1,64 @@
+version: '3'
+services:
+    redis1:
+        image: 10.126.2.65:5000/ubuntu_16.04_ssh_redis
+        hostname: redis1
+        volumes: 
+            - "/etc/localtime:/etc/localtime:ro" 
+            - "/home/containerd/redis/redis_6379/config/redis.conf:/etc/redis/redis.conf:rw"
+            - "/home/containerd/redis/redis_6379/data:/var/lib/redis"
+            - "/home/containerd/redis/redis_6379/log:/var/log/redis"
+        ports:
+            - "16379:6379"
+            #- "8379:6379"
+        environment:
+            REDIS_ROLE: "master"
+        command: /preparation/redis.sh
+        deploy:
+            placement:
+                constraints: [node.hostname == wbm84]
+                #constraints: [node.hostname == wbm65]
+            resources:
+                limits:
+                    memory: 1G
+    redis2:
+        image: 10.126.2.65:5000/ubuntu_16.04_ssh_redis
+        hostname: redis2
+        volumes:
+            - "/etc/localtime:/etc/localtime:ro"
+            - "/home/containerd/redis/redis_6380/config/redis.conf:/etc/redis/redis.conf:rw"
+            - "/home/containerd/redis/redis_6380/data:/var/lib/redis"
+            - "/home/containerd/redis/redis_6380/log:/var/log/redis"
+        ports:
+            - "16380:6379"
+            #- "8380:6379"
+        environment:
+            REDIS_ROLE: "slave"
+            MASTER_CONTAINER: "redis1"
+        command: /preparation/redis.sh
+        depends_on: 
+            - redis1
+        deploy:
+            placement:
+                constraints: [node.hostname == wbm84]
+                #constraints: [node.hostname == wbm65]
+            resources:
+                limits:
+                    memory: 1G
+#    redis3:
+#        image: 10.126.2.65:5000/ubuntu_16.04_ssh_redis
+#        hostname: redis3
+#        volumes:
+#            - "/etc/localtime:/etc/localtime:ro"
+#            - "/home/containerd/redis/redis_6381/config/redis.conf:/etc/redis/redis.conf:rw"
+#            - "/home/containerd/redis/redis_6381/data:/var/lib/redis"
+#            - "/home/containerd/redis/redis_6381/log:/var/log/redis"
+#        ports:
+#            - "6381:6379"
+#        environment:
+#            REDIS_ROLE: "slave"
+#            MASTER_CONTAINER: "redis1"
+#        command: /preparation/redis.sh
+#        depends_on: 
+#            - redis1
+

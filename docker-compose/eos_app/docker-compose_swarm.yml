@@ -1,0 +1,69 @@
+version: '2'
+services:
+  top1: 
+    image: 10.126.2.65:5000/centos_eos_ntop 
+    mem_limit: 2G
+    hostname: top1
+    deploy:
+      placement:
+        constraints: [node.hostname == wbm65]
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 2G
+    devices: 
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - ALL
+    volumes: 
+      - /etc/localtime:/etc/localtime:ro
+      - /home/containerd/eos_app/webapps/default:/app/tomcat-7.0.68/webapps/default
+      - /home/containerd/eos_app/logs/eos_app_1:/app/tomcat-7.0.68/logs
+      - /home/containerd/eos_app/config/primetonlicense.xml:/app/primeton/platform/apps_config/default/license/primetonlicense.xml:rw
+      - /home/containerd/eos_app/config/primetonlicense.xml:/app/primeton/platform/apps_config/governor/license/primetonlicense.xml:rw
+      - /home/containerd/eos_app/config/primetonlicense.xml:/app/primeton/platform/apps_config/workspace/license/primetonlicense.xml:rw
+      - /home/containerd/eos_app/config/user-config.xml:/app/primeton/platform/apps_config/default/config/user-config.xml:rw
+    ports:
+      - "9081:80" 
+    
+  top2:
+    image: 10.126.2.65:5000/centos_eos_ntop 
+    hostname: top2
+    deploy:
+      resources:
+        placement:
+          constraints: [node.hostname == wbm65]
+        limits:
+#          cpus: '0.50'
+          memory: 2G
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /home/containerd/eos_app/webapps/default:/app/tomcat-7.0.68/webapps/default
+      - /home/containerd/eos_app/logs/eos_app_2:/app/tomcat-7.0.68/logs
+      - /home/containerd/eos_app/config/primetonlicense.xml:/app/primeton/platform/apps_config/default/license/primetonlicense.xml:rw
+      - /home/containerd/eos_app/config/primetonlicense.xml:/app/primeton/platform/apps_config/governor/license/primetonlicense.xml:rw
+      - /home/containerd/eos_app/config/primetonlicense.xml:/app/primeton/platform/apps_config/workspace/license/primetonlicense.xml:rw
+      - /home/containerd/eos_app/config/user-config.xml:/app/primeton/platform/apps_config/default/config/user-config.xml:rw
+    ports:
+      - "9082:80"
+
+  top3:
+    image: 10.126.2.65:5000/centos_eos_ntop
+    hostname: top3
+    deploy:
+      resources:
+        placement:
+          constraints: [node.hostname == wbm65]
+        limits:
+#          cpus: '0.50'
+          memory: 2G
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /home/containerd/eos_app/webapps/default:/app/tomcat-7.0.68/webapps/default
+      - /home/containerd/eos_app/logs/eos_app_3:/app/tomcat-7.0.68/logs
+      - /home/containerd/eos_app/config/primetonlicense.xml:/app/primeton/platform/apps_config/default/license/primetonlicense.xml:rw
+      - /home/containerd/eos_app/config/primetonlicense.xml:/app/primeton/platform/apps_config/governor/license/primetonlicense.xml:rw
+      - /home/containerd/eos_app/config/primetonlicense.xml:/app/primeton/platform/apps_config/workspace/license/primetonlicense.xml:rw
+      - /home/containerd/eos_app/config/user-config.xml:/app/primeton/platform/apps_config/default/config/user-config.xml:rw
+    ports:
+      - "9083:80"

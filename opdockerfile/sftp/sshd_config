@@ -1,0 +1,21 @@
+# Secure defaults
+# See: https://stribika.github.io/2015/01/04/secure-secure-shell.html
+Protocol 2
+
+# Faster connection
+# See: https://github.com/atmoz/sftp/issues/11
+UseDNS no
+
+# Limited access
+PermitRootLogin no
+AllowTcpForwarding no    
+X11Forwarding no
+# Force sftp and chroot jail
+Subsystem sftp internal-sftp
+UsePAM yes
+Match user foo
+ForceCommand internal-sftp
+ChrootDirectory /opt/foo 
+
+# Enable this for more logs
+#LogLevel VERBOSE

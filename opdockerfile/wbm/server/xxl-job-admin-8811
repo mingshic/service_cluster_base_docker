@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# soa startup script for the xxl-job-admin 
+#
+#chkconfig:2345 20 90
+# description: start the xxl-job-admin deamon
+#
+# Source function library
+
+PROG_NAME="xxl-job-admin.jar"
+
+pid=`ps -ef | grep "java -jar xxl-job-admin.jar" | grep -v grep | awk -F " " '{print $2}'`
+PROG_PATH="/opt/www/webjar/zheng-job-admin"
+
+
+case "$1" in
+start)
+    echo "starting $PROG_NAME..."
+    if [ ! -n "$pid" ];then
+        cd $PROG_PATH
+        nohup java -jar xxl-job-admin.jar >> job-admin.log 2>&1 &
+    else
+        echo "have been already starting"
+    fi
+    ;;
+
+stop)
+    echo "stopping $PROG_NAME..."
+    if [ -n "$pid" ];then
+        kill $pid
+    else
+        echo "have been already stopping"
+    fi
+    ;;
+
+*)
+    echo "Usage: $PROG_NAME {start|stop}"
+    ;;
+esac
+exit 0

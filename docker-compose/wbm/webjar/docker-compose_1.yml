@@ -1,0 +1,97 @@
+version: '3'
+services:
+    zheng_upms_rpc1:
+        image: tomcat_wbm_service 
+        hostname: zheng_upms_rpc_1
+        volumes:
+            - "/etc/localtime:/etc/localtime:ro"
+            - "/home/containerd/wbm1/www/webjar/zheng-upms-rpc-service:/opt/www/webjar/zheng-upms-rpc-service"
+            - "/home/containerd/wbm1/hosts:/etc/hosts"
+        ports:
+            - "22881:20881"
+        command: sh /opt/www/webjar/zheng-upms-rpc-service/bin/start.sh
+        environment:
+            SERVICE_PATH: "/opt/www/webjar/zheng-upms-rpc-service"
+        deploy:
+            placement:
+                constraints: [node.hostname == wbm65]
+            resources:
+                limits:
+                    memory: 500M
+
+#    wbm_rms_rpc:
+#        image: tomcat_wbm
+#        hostname: wbm_rms_rpc
+#        volumes:
+#            - "/etc/localtime:/etc/localtime:ro"            
+#            - "/home/containerd/wbm/www/webjar/wbm-rms-rpc-service:/opt/www/webjar/wbm-rms-rpc-service"
+#            - "/home/containerd/wbm/hosts:/etc/hosts"
+#        ports:
+#            - "20806:20806"
+#        command: /opt/www/webjar/wbm-rms-rpc-service/bin/start.sh
+#        environment:
+#            SERVICE_PATH: "/opt/www/webjar/wbm-rms-rpc-service"
+#        deploy:
+#            placement:
+#                constraints: [node.hostname == wbm65]
+#            resources:
+#                limits:
+#                    memory: 500M
+
+    wbm_bi_rpc1:
+        image: tomcat_wbm_service 
+        hostname: wbm_bi_rpc_1
+        volumes:
+            - "/etc/localtime:/etc/localtime:ro"            
+            - "/home/containerd/wbm1/www/webjar/wbm-bi-rpc-service:/opt/www/webjar/wbm-bi-rpc-service"
+            - "/home/containerd/wbm1/hosts:/etc/hosts"
+        ports:
+            - "20818:20807"
+        command: sh /opt/www/webjar/wbm-bi-rpc-service/bin/start.sh
+        environment:
+            SERVICE_PATH: "/opt/www/webjar/wbm-bi-rpc-service"
+        deploy:
+            placement:
+                constraints: [node.hostname == wbm65]
+            resources:
+                limits:
+                    memory: 500M
+
+    zheng_api_rpc1:
+        image: tomcat_wbm_service 
+        hostname: zheng_api_rpc_1
+        volumes:
+            - "/etc/localtime:/etc/localtime:ro"            
+            - "/home/containerd/wbm1/www/webjar/zheng-api-rpc-service:/opt/www/webjar/zheng-api-rpc-service"
+            - "/home/containerd/wbm1/hosts:/etc/hosts"
+        ports:
+            - "20828:20808"
+            - "8828:8808"
+        command: sh /opt/www/webjar/zheng-api-rpc-service/bin/start.sh
+        environment:
+            SERVICE_PATH: "/opt/www/webjar/zheng-api-rpc-service"
+        deploy:
+            placement:
+                constraints: [node.hostname == wbm65]
+            resources:
+                limits:
+                    memory: 500M
+
+#    wbm_hrkq_rpc:
+#        image: tomcat_wbm
+#        hostname: wbm_hrkq_rpc
+#        volumes:
+#            - "/etc/localtime:/etc/localtime:ro"            
+#            - "/home/containerd/wbm/www/webjar/wbm-hrkq-rpc-service:/opt/www/webjar/wbm-hrkq-rpc-service"
+#            - "/home/containerd/wbm/hosts:/etc/hosts"
+#        ports:
+#            - "20809:20809"
+#        command: /opt/www/webjar/wbm-hrkq-rpc-service/bin/start.sh
+#        environment:
+#            SERVICE_PATH: "/opt/www/webjar/wbm-hrkq-rpc-service"
+#        deploy:
+#            placement:
+#                constraints: [node.hostname == wbm65]
+#            resources:
+#                limits:
+#                    memory: 500M

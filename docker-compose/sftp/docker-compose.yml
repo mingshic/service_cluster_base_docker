@@ -1,0 +1,17 @@
+version: '3'
+services:
+  sftp:
+    image: 10.126.2.65:5000/sftp 
+    hostname: sftp
+    volumes:
+      - /home/containerd/sftp/config/users.conf:/etc/sftp/users.conf
+      - /home/containerd/sftp/config/sshd_config:/etc/ssh/sshd_config
+      - /home/containerd/sftp/data/upload:/opt
+    ports:
+      - "21000:22"
+    deploy:
+      placement:
+        constraints: [node.hostname == wbm65]
+      resources:
+        limits:
+          memory: 300M

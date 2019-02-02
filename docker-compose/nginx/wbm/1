@@ -1,0 +1,1 @@
+docker run -itd --name nginx -p /etc/localtime:/etc/localtime:ro -p /home/containerd/nginx/wbm/conf/nginx.conf:/usr/local/nginx/conf/nginx.conf:rw -p /home/containerd/nginx/wbm/conf/servers:/usr/local/nginx/conf/servers -p /home/containerd/nginx/wbm/logs:/usr/local/nginx/logs keepalived_nginx

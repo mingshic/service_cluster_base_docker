@@ -1,0 +1,40 @@
+version: '3'
+services:
+  nginx1:
+    image: keepalived_nginx
+    hostname: web_wbm1
+    volumes:
+      - /etc/localtime:/etc/localtime:ro 
+      - /home/containerd/nginx/wbm/conf/nginx.conf:/usr/local/nginx/conf/nginx.conf:rw 
+      - /home/containerd/nginx/wbm/conf/servers:/usr/local/nginx/conf/servers
+      - /home/containerd/nginx/wbm/logs:/usr/local/nginx/logs 
+    ports:
+      - "9088:9080"
+      - "8807:8807"
+#      - "8808:8808"
+#      - "20808:20808"
+#      - "20881:20881"
+#      - "20807:20807"
+    deploy:
+      placement:
+        constraints: [node.hostname == wbm65]
+      resources:
+        limits:
+          memory: 500M
+#  nginx2:
+#    image: keepalived_nginx
+#    hostname: web_wbm2
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#      - /home/containerd/nginx/wbm/conf/nginx.conf:/usr/local/nginx/conf/nginx.conf:rw
+#      - /home/containerd/nginx/wbm/conf/servers:/usr/local/nginx/conf/servers
+#      - /home/containerd/nginx/wbm/logs:/usr/local/nginx/logs
+#    ports:
+#      - "8088:80"
+#      - "8089:8181"
+#    deploy:
+#      placement:
+#        constraints: [node.hostname == wbm64]
+#      resources:
+#        limits:
+#          memory: 500M

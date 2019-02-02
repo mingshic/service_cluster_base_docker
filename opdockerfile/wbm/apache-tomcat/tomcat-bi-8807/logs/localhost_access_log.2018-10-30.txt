@@ -1,0 +1,9 @@
+172.16.3.50 - - [30/Oct/2018:00:02:43 +0800] "GET /bi/ HTTP/1.0" 302 -
+172.16.3.50 - - [30/Oct/2018:00:02:43 +0800] "GET /bi/manage/index;JSESSIONID=844ccc70-e17c-4be5-aed3-69f2b6ee6c30 HTTP/1.0" 302 -
+172.16.3.50 - - [30/Oct/2018:00:08:26 +0800] "GET /bi/ HTTP/1.0" 302 -
+172.16.3.50 - - [30/Oct/2018:00:08:26 +0800] "GET /bi/manage/index;JSESSIONID=5ecd2e5d-0886-405b-be3c-d9743b14b6b8 HTTP/1.0" 302 -
+172.16.3.50 - - [30/Oct/2018:00:08:48 +0800] "GET /bi/manage/index;JSESSIONID=5ecd2e5d-0886-405b-be3c-d9743b14b6b8 HTTP/1.0" 302 -
+172.16.3.50 - - [30/Oct/2018:00:08:48 +0800] "GET /bi/manage/index;JSESSIONID=5ecd2e5d-0886-405b-be3c-d9743b14b6b8?upms_code=c3bafe50-b010-4ee2-8e5c-7e69abc0a17c&upms_username=admin HTTP/1.0" 302 -
+172.16.3.50 - - [30/Oct/2018:00:08:48 +0800] "GET /bi/manage/index;JSESSIONID=5ecd2e5d-0886-405b-be3c-d9743b14b6b8 HTTP/1.0" 302 -
+172.16.3.50 - - [30/Oct/2018:00:08:49 +0800] "GET /bi/manage/ HTTP/1.0" 404 126
+172.16.3.50 - - [30/Oct/2018:00:10:50 +0800] "GET /bi/manage/ HTTP/1.0" 404 126

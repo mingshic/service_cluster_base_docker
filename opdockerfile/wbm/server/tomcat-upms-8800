@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+# tomcat startup script for the Tomcat server
+#
+#chkconfig:2345 20 90
+# description: start the tomcat deamon
+#
+# Source function library
+. /etc/rc.d/init.d/functions
+
+PROG_NAME=tomcat-upms-8800
+CATALINA_HOME="/opt/tomcat/$PROG_NAME"
+
+case "$1" in
+start)
+    echo "starting $PROG_NAME..."
+    $CATALINA_HOME/bin/startup.sh
+    ;;
+
+stop)
+    echo "stopping $PROG_NAME..."
+    $CATALINA_HOME/bin/shutdown.sh
+    ;;
+
+restart)
+    echo "stopping $PROG_NAME..."
+    $CATALINA_HOME/bin/shutdown.sh
+    sleep 2
+    echo
+    echo "starting $PROG_NAME..."
+    $CATALINA_HOME/bin/startup.sh
+    ;;
+
+*)
+    echo "Usage: $PROG_NAME {start|stop|restart}"
+    ;;
+esac
+exit 0

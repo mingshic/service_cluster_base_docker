@@ -1,0 +1,27 @@
+FROM mysql:5.7.17
+
+ENV LANG C.UTF-8
+
+COPY ./preparation /preparation
+RUN build_deps='supervisor vim openssh-server sshpass expect perl libdbi-perl libdbd-mysql-perl make python' \
+    && pack='/preparation' \
+    && mv /etc/apt/sources.list /etc/apt/sources.list.bak \
+    && mv $pack/sources.list /etc/apt/sources.list \
+    && apt-get clean \
+    && apt-get update \
+    && apt-get -y --force-yes install $build_deps \
+    && apt-get purge -y --auto-remove $buil_deps \
+    && sed -n -i 's/UsePAM yes/UsePAM no/gp' /etc/ssh/sshd_config \
+    && tar -zxf $pack/mha4mysql-node-0.56.tar.gz -C /opt \
+    && cd /opt/mha4mysql-node-0.56 \
+    && perl Makefile.PL \
+    && make \
+    && make install \
+    && rm -rf /opt/mha4mysql-node-0.56 \
+    && /etc/init.d/ssh start \
+    && echo "root:123456" | chpasswd \
+    && rm -rf /etc/mysql/mysql.conf.d/mysqld.cnf && rm -rf /etc/mysql/conf.d/docker.cnf \
+    && cp -rp /preparation/supervisord.conf /etc/supervisor/supervisord.conf \
+    && cp -rp /preparation/conf.d/mysql.ini /etc/supervisor/conf.d/
+
+CMD ["/preparation/mysql.py"]

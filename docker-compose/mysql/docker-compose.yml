@@ -1,0 +1,73 @@
+version: '3'
+services:
+  m1: 
+#    image: 10.126.2.65:5000/mysql_5.7_mha_node 
+    image: 10.126.2.65:5000/mysql_5.7_node
+    hostname: m1
+    volumes: 
+      - /etc/localtime:/etc/localtime:ro
+      - /home/containerd/mysql/master1/data:/var/lib/mysql
+      - /home/containerd/mysql/master1/log:/var/log/mysql
+      - /home/containerd/mysql/master1/conf/my.cnf:/etc/mysql/my.cnf:rw
+    environment:
+      - MYSQL_ROLE=master
+      - MYSQL_ROOT_PASSWORD=rootMdbServer1818!
+      - MYSQL_REPL_USER=repl
+      - MYSQL_REPL_PASSWORD=123456
+      - MYSQL_MASTER_CONTAINER=m1
+    command: supervisord -c /etc/supervisor/supervisord.conf
+#    command: sleep 18000
+    ports:
+      - "13306:3306"
+    deploy:
+      placement:
+        constraints: [node.hostname == wbm84]
+      resources:
+        limits:
+          memory: 1G
+  s1:
+#    image: 10.126.2.65:5000/mysql_5.7_mha_node
+    image: 10.126.2.65:5000/mysql_5.7_node
+    hostname: s1
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /home/containerd/mysql/slave1/data:/var/lib/mysql
+      - /home/containerd/mysql/slave1/log:/var/log/mysql
+      - /home/containerd/mysql/slave1/conf/my.cnf:/etc/mysql/my.cnf:rw
+    environment:
+      - MYSQL_ROLE=slave
+      - MYSQL_ROOT_PASSWORD=rootMdbServer1818!
+      - MYSQL_REPL_USER=repl
+      - MYSQL_REPL_PASSWORD=123456
+      - MYSQL_MASTER_CONTAINER=m1
+      - MYSQL_MASTER_ROOT_PASSWORD=rootMdbServer1818!
+    command: supervisord -c /etc/supervisor/supervisord.conf
+#    command: sleep 18000 
+    ports:
+      - "13307:3306"
+    depends_on:
+      - m1
+    deploy:
+      placement: 
+        constraints: [node.hostname == wbm84]
+      resources:
+        limits:
+          memory: 1G
+#  s2:
+#    image: 10.126.2.65:5000/mysql_5.7_mha_node 
+#    hostname: s2
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#      - /home/mysql/slave2/data:/var/lib/mysql
+#      - /home/mysql/slave2/log:/var/log/mysql
+#      - /home/mysql/slave2/conf/my.cnf:/etc/mysql/my.cnf:rw
+#    environment:
+#      - MYSQL_ROLE=slave
+#      - MYSQL_ROOT_PASSWORD=sql3
+#      - MYSQL_REPL_USER=repl
+#      - MYSQL_REPL_PASSWORD=123456
+#      - MYSQL_MASTER_CONTAINER=m1
+#      - MYSQL_MASTER_ROOT_PASSWORD=sql1
+#    command: /preparation/mysql.py
+#    depends_on:
+#      - m1

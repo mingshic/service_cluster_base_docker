@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# soa startup script for the zheng-upms-rpc-service
+#
+#chkconfig:2345 20 90
+# description: start the zheng-upms-rpc-service deamon
+#
+# Source function library
+. /etc/rc.d/init.d/functions
+
+PROG_NAME=zheng-api-rpc-service
+CATALINA_HOME="/opt/www/webjar/zheng-api-rpc-service"
+
+case "$1" in
+start)
+    echo "starting $PROG_NAME..."
+    $CATALINA_HOME/bin/server.sh start
+    ;;
+
+stop)
+    echo "stopping $PROG_NAME..."
+    $CATALINA_HOME/bin/server.sh stop
+    ;;
+
+restart)
+    echo "stopping $PROG_NAME..."
+    $CATALINA_HOME/bin/server.sh stop
+    sleep 2
+    echo
+    echo "starting $PROG_NAME..."
+    $CATALINA_HOME/bin/server.sh start
+    ;;
+
+debug)
+    echo "debuging $PROG_NAME..."
+    $CATALINA_HOME/bin/server.sh debug
+    ;;
+
+dump)
+    echo "dumping $PROG_NAME..."
+    $CATALINA_HOME/bin/server.sh dump
+    ;;
+
+*)
+    echo "Usage: $PROG_NAME {start|stop|restart|debug|dump}"
+    ;;
+esac
+exit 0

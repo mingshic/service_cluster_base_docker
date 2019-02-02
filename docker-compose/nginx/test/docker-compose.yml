@@ -1,0 +1,46 @@
+version: '3'
+services:
+#  nginx65:
+#    image: nginx
+#    hostname: nginx65
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro 
+#      - /home/containerd/nginx/test/index.html:/usr/share/nginx/html/index.html:rw
+#    ports:
+#      - "18888:80"
+#    deploy:
+#      placement:
+#        constraints: [node.hostname == wbm65]
+#      resources:
+#        limits:
+#          memory: 100M
+#
+  nginx83:
+    image: nginx
+    hostname: nginx83
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /home/containerd/nginx/test/index.html:/usr/share/nginx/html/index.html:rw
+    ports:
+      - "18888:80"
+    deploy:
+      placement:
+        constraints: [node.hostname == wbm83]
+      resources:
+        limits:
+          memory: 100M
+
+#  nginx84:
+#    image: nginx
+#    hostname: nginx84
+#    volumes:
+#      - /etc/localtime:/etc/localtime:ro
+#      - /home/containerd/nginx/test/index.html:/usr/share/nginx/html/index.html:rw
+#    ports:
+#      - "18888:80"
+#    deploy:
+#      placement:
+#        constraints: [node.hostname == wbm84]
+#      resources:
+#        limits:
+#          memory: 100M
